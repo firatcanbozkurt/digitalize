@@ -24,6 +24,7 @@ model Product {
   downloadVerifications  DownloadVerification[]
 }
 
+// Currently, user has only an email to purchase a digital document. Auth will be added.
 model User {
   id        String   @id @default(uuid())
   email     String   @unique
@@ -32,6 +33,7 @@ model User {
   orders    Order[]
 }
 
+// An Order has a price in cents because we're using Strapi for payment.
 model Order {
   id               String   @id @default(uuid())
   pricePaidInCents Int
@@ -43,6 +45,7 @@ model Order {
   product          Product  @relation(fields: [productId], references: [id], onDelete: Restrict)
 }
 
+// A user who purchased a specific PDF can download the document using a UUID. It expires in a specified time.
 model DownloadVerification {
   id        String   @id @default(uuid())
   expiresAt DateTime
